@@ -20,7 +20,10 @@ const PORT = process.env.PORT || 4000;
 
 connectDb();
 
-app.use(cors());
+app.use(cors({ origin:["http://localhost:5173", "http://localhost:5174"],
+
+   credentials: true
+}));
 app.use(express.json());
 app.set("trust proxy", 1);
 app.use(limiter);

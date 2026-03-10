@@ -2,6 +2,7 @@ import Razorpay from "razorpay";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import crypto from "crypto";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -51,7 +52,7 @@ export const verifyPayment = async (req, res) => {
   try {
     const { paymentId, orderId, signature, orderData } = req.body;
 
-    const secret = process.env.RAZORPAY_SECRET;
+    const secret = process.env.RAZORPAY_KEY_SECRET;
     const generatedSignature = crypto
       .createHmac("sha256", secret)
       .update(orderId + "|" + paymentId)
@@ -80,12 +81,17 @@ export const verifyPayment = async (req, res) => {
     res.json({ success: false, message: "server error" });
   }
 };
-
 export const getOrders = async (req, res) => {
   try {
-    const userId = req.user;
-    const orderData = await orderModel.find({ userId, payment: true });
+    const userId = new mongoose.Types.ObjectId(req.user);
+
+    const orderData = await orderModel.find({
+      userId,
+      payment: true,
+    });
+
     res.json({ success: true, data: orderData });
+
   } catch (error) {
     console.log("error in get orders", error.message);
     res.json({ success: false, message: "error in server" });

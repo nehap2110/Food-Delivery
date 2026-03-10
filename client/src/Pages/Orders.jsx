@@ -44,9 +44,12 @@ const Orders = () => {
       const response = await axios.get(backendUrl + "/api/order/getOrders", {
         headers: { token },
       });
+
+       console.log("Orders response:", response.data);
       if (response.data.success) {
         setOrderData(response.data.data);
       }
+      
     } catch (error) {
       console.log("error in tracking orders", error.message);
     } finally {
@@ -58,9 +61,15 @@ const Orders = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
+ useEffect(() => {
+  const interval = setInterval(() => {
     fetchOrderData();
-  }, [token]);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [token]);
+
+const steps = ["Pending", "Preparing", "Out for Delivery", "Delivered"];
 
   return (
     <div>
@@ -126,7 +135,42 @@ const Orders = () => {
                       Quantity: {order?.items?.length || 0}
                     </p>
                   </div>
-                  <div className="font-Outfit font-semibold text-base text-center md:text-right w-full md:w-auto mt-4 md:mt-0">
+
+                  {/* add tracker */}
+
+              <div className="w-full mt-6">
+  <div className="flex items-center justify-between relative">
+    
+    {steps.map((step, index) => {
+      const currentStep = steps.indexOf(order.status);
+
+      return (
+        <div key={index} className="flex flex-col items-center flex-1">
+          
+          {/* Circle */}
+          <div
+            className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs
+            ${index <= currentStep ? "bg-green-500" : "bg-gray-300"}`}
+          >
+            {index <= currentStep ? "✓" : ""}
+          </div>
+
+          {/* Step Label */}
+          <p className="text-xs mt-2 text-center font-Outfit">
+            {step}
+          </p>
+
+        </div>
+      );
+    })}
+
+    {/* Progress Line */}
+    <div className="absolute top-3 left-0 w-full h-[2px] bg-gray-300 -z-10"></div>
+
+  </div>
+</div>
+
+                  {/* <div className="font-Outfit font-semibold text-base text-center md:text-right w-full md:w-auto mt-4 md:mt-0">
                     <span
                       className={`px-4 py-2 rounded-full border ${getStatusStyle(
                         order?.status || ""
@@ -134,7 +178,7 @@ const Orders = () => {
                     >
                       {order?.status || "Unknown"}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>

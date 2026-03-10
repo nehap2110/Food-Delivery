@@ -84,9 +84,16 @@ const FoodList = () => {
     console.log("delete start");
 
     try {
+        const token = localStorage.getItem("token");
       const response = await axios.post(backendUrl + "/api/food/delete", {
         id,
-      });
+      },
+      {
+      headers :{
+        token : token
+      }
+    }
+    );
       if (response.data.success) {
         toast.success(response.data.message);
         setFoodList(response.data.data);

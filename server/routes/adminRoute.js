@@ -5,12 +5,14 @@ import {
   getOrders,
   updateOrderStatus,
 } from "../controllers/adminController.js";
+import { verifyAdmin } from "../middlewares/verifyAdmin.js";
+import { checkAuth } from "../middlewares/auth.js";
 
 const adminRoute = express.Router();
 
 adminRoute.post("/login", adminLogin);
 adminRoute.post("/register", addAdmin);
-adminRoute.get("/getOrders", getOrders);
-adminRoute.put("/updateOrderStatus", updateOrderStatus);
+adminRoute.get("/getOrders",checkAuth, verifyAdmin, getOrders);
+adminRoute.put("/updateOrderStatus",checkAuth,verifyAdmin, updateOrderStatus);
 
 export default adminRoute;

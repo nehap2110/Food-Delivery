@@ -67,8 +67,13 @@ const AddProduct = () => {
     formData.append("description", product.description);
 
     try {
+
+      const token = localStorage.getItem("token");
       const response = await fetch(backendUrl + "/api/food/add-food", {
         method: "POST",
+         headers: {
+         token: token,
+          },
         body: formData,
       });
 

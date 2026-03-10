@@ -3,6 +3,12 @@ import { addFood, deleteFood, getFood } from "../controllers/foodContoller.js";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import dotenv from 'dotenv'
+import { checkAuth } from "../middlewares/auth.js";
+import { verifyAdmin, verifyToken } from "../middlewares/verifyAdmin.js";
+dotenv.config();
+
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -13,14 +19,15 @@ cloudinary.config({
 const foodRoute = express.Router();
 
 const upload = multer({
-  dest: "temp_uploads",
+  dest: "temp_uploads/",
 });
 
 
 
-foodRoute.post("/add-food", upload.single("image"), async (req, res) => {
+foodRoute.post("/add-food",checkAuth,verifyToken, verifyAdmin, upload.single("image"), async (req, res) => {
   try {
     const { name, price, category, description, discount } = req.body;
+      
 
     const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "food-images",
@@ -40,6 +47,6 @@ foodRoute.post("/add-food", upload.single("image"), async (req, res) => {
   }
 });
 foodRoute.get("/get-food", getFood);
-foodRoute.post("/delete", deleteFood);
+foodRoute.post("/delete",checkAuth,verifyToken,verifyAdmin, deleteFood);
 
 export default foodRoute;
