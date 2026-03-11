@@ -4,6 +4,10 @@ import axios from "axios";
 import DynamicBg from "../components/DynamicBg";
 import Footer from "../components/Footer";
 import { assets } from "../assets/assets";
+import toast from 'react-hot-toast'
+
+import { io } from "socket.io-client";
+const socket = io("http://localhost:4000");
 
 const Orders = () => {
   const { backendUrl, token } = useContext(AppContext);
@@ -69,7 +73,18 @@ const Orders = () => {
   return () => clearInterval(interval);
 }, [token]);
 
+//socket.io to notify user
+useEffect(() => {
+  socket.on("orderStatusUpdated", (data) => {
+    toast.success(`🔔Your order status changed to ${data.status}`);
+    fetchOrders(); // refresh orders
+  });
+
+  return () => socket.off("orderStatusUpdated");
+}, []);
+
 const steps = ["Pending", "Preparing", "Out for Delivery", "Delivered"];
+
 
   return (
     <div>

@@ -13,9 +13,35 @@ import visitorRouter from "./routes/visitorRoute.js";
 import limiter from "./config/rateLimiter.js";
 import { redis } from "./config/redis.js";
 
+const app = express();
+
+//socket.io
+import http from "http";
+import { Server } from "socket.io";
+const server = http.createServer(app);
+
+
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
+global.io = io;
+
+
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  socket.on("joinRoom", (userId) => {
+    socket.join(userId);
+    console.log("User joined room:", userId);
+  });
+});
+
+ 
 configDotenv();
 
-const app = express();
+//const app = express();
 const PORT = process.env.PORT || 4000;
 
 connectDb();
@@ -62,6 +88,10 @@ app.use("/api/order", orderRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/admin", adminRoute);
 
-app.listen(PORT, () => {
-  console.log("✅ Server running on PORT:", PORT);
+server.listen(4000, () => {
+  console.log("Server running");
 });
+
+// app.listen(PORT, () => {
+//   console.log("✅ Server running on PORT:", PORT);
+// });

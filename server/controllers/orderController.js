@@ -83,7 +83,7 @@ export const verifyPayment = async (req, res) => {
 };
 export const getOrders = async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectId(req.user);
+    const userId = (req.user);
 
     const orderData = await orderModel.find({
       userId,
@@ -97,3 +97,4 @@ export const getOrders = async (req, res) => {
     res.json({ success: false, message: "error in server" });
   }
 };
+

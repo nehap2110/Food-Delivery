@@ -105,11 +105,24 @@ export const getOrders = async (req, res) => {
 export const updateOrderStatus = async (req, res) => {
   try {
     const { orderId, status } = req.body;
+    //new add by me
+    const order = await orderModel.findById(orderId);
     const updatedOrder = await orderModel.findByIdAndUpdate(
       orderId,
       { status },
       { new: true }
     );
+
+
+    // Notify user -- added by me
+    io.to(order.userId).emit("orderStatusUpdated", {
+      orderId,
+      status,
+      userId: order.userId
+    });
+    //
+
+
     res.json({ success: true, data: updatedOrder });
   } catch (err) {
     res.status(500).json({ success: false, message: "Failed to update order" });

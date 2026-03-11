@@ -3,11 +3,22 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const createToken = (id) => {
+// const createToken = (id) => {
+//   try {
+//     return jwt.sign({ id }, process.env.JWT_SECRET);
+//   } catch (error) {
+//     console.log("error in create token (userconroller) ", error.message);
+//   }
+// };
+
+
+const createToken = (id, role) => {
   try {
-    return jwt.sign({ id }, process.env.JWT_SECRET);
+    return jwt.sign({ id, role }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
   } catch (error) {
-    console.log("error in create token (userconroller) ", error.message);
+    console.log("error in create token ", error.message);
   }
 };
 
@@ -26,7 +37,7 @@ export const userLogin = async (req, res) => {
       return res.json({ success: false, message: "Invalid password" });
     }
 
-    const token = createToken(user._id);
+    const token = createToken(user._id,user.role);
     res.json({ success: true, token, message: "Logged In", user: user.name });
   } catch (error) {
     console.log("error in login (user controller) ", error.message);
@@ -60,7 +71,7 @@ export const userRegister = async (req, res) => {
     });
 
     const user = await newUser.save();
-    const token = createToken(user._id);
+    const token = createToken(user._id,user.role);
 
     res.json({ success: true, token, message: "Signed In", user: user.name });
   } catch (error) {
