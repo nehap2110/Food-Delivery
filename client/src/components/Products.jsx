@@ -1,11 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext ,useEffect} from "react";
 import { motion } from "framer-motion";
 import { AppContext } from "../context/AppContext";
 import { ShoppingBag } from "lucide-react";
+import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const { addToCart, addingStates, backendUrl, food_list, isLoading } =
     useContext(AppContext);
+
+const navigate = useNavigate();
+
 
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -59,6 +65,7 @@ const Products = () => {
               item && (
                 <motion.div
                   key={item._id}
+                   onClick={() => navigate(`/food/${item._id}`)} 
                   className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 group cursor-pointer"
                   variants={productCardVariants}
                   initial="hidden"
@@ -77,6 +84,19 @@ const Products = () => {
                     <h3 className="text-lg sm:text-xl font-semibold text-amber-950 mb-2">
                       {item?.name || "Product Name"}
                     </h3>
+
+               {/* add review and rating */}
+              <div className="flex items-center justify-center gap-2 mt-1 mb-2">
+                <span className="text-yellow-500 text-sm">
+                  ⭐ {item?.avgRating?.toFixed(1) || "0.0"}
+                </span>
+
+           <span className="text-gray-500 text-sm">
+              ({item?.reviewCount || 0} reviews)
+           </span>
+          </div>
+
+
                     <div className="flex items-center justify-center space-x-3 mb-4">
                       <p className="text-amber-600 text-lg sm:text-xl font-Outfit font-bold">
                         {(item?.discount || 0).toFixed(2)}{" "}

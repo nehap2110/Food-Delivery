@@ -60,14 +60,30 @@ export const verifyPayment = async (req, res) => {
 
     if (generatedSignature === signature) {
       // Create and save the order only after successful payment verification
+      // const newOrder = new orderModel({
+      //   userId: orderData.userId,
+      //   items: orderData.items,
+      //   amount: orderData.amount,
+      //   address: orderData.address,
+      //   razorpayOrderId: orderId,
+      //   payment: true
+      // });
+
       const newOrder = new orderModel({
-        userId: orderData.userId,
-        items: orderData.items,
-        amount: orderData.amount,
-        address: orderData.address,
-        razorpayOrderId: orderId,
-        payment: true
-      });
+  userId: orderData.userId,
+
+  items: orderData.items.map(item => ({
+   foodId: item.foodId || item._id,   // ⭐ store foodId
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  })),
+
+  amount: orderData.amount,
+  address: orderData.address,
+  razorpayOrderId: orderId,
+  payment: true
+});
 
       await newOrder.save();
       await userModel.findByIdAndUpdate(orderData.userId, { cartData: [] });

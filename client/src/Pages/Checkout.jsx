@@ -36,6 +36,7 @@ const Checkout = () => {
 
     const simplifiedItems =
       cartItems?.map((item) => ({
+        _id: item._id, //add this food id
         name: item?.productId?.name || "Unknown Product",
         price: item?.productId?.discount || 0,
         quantity: item?.quantity || 0,
@@ -95,6 +96,7 @@ const Checkout = () => {
 
   const verifyPayment = async (paymentResponse, orderData) => {
     try {
+      console.log("orderData.item",orderData.items)
       const response = await axios.post(
         backendUrl + "/api/order/verifyPayment",
         {
@@ -276,7 +278,7 @@ const Checkout = () => {
               <div className="flex justify-between">
                 <p>Subtotal</p>
                 <p className="text-amber-950 text-md sm:text-xl font-Outfit font-bold">
-                  {totalAmount.toFixed(2) || 0}{" "}
+                  {(totalAmount || 0).toFixed(2) || 0}{" "}
                   <span className="text-sm font-normal">INR</span>
                 </p>
               </div>

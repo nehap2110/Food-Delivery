@@ -9,6 +9,7 @@ import cartRoute from "./routes/cartRoute.js";
 import orderRoute from "./routes/orderRoute.js";
 import adminRoute from "./routes/adminRoute.js";
 import visitorRouter from "./routes/visitorRoute.js";
+import reviewRouter from "./routes/reviewRoute.js";
 
 import limiter from "./config/rateLimiter.js";
 import { redis } from "./config/redis.js";
@@ -87,6 +88,7 @@ app.use("/api/food", foodRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/review", reviewRouter);
 
 server.listen(4000, () => {
   console.log("Server running");

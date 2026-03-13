@@ -16,6 +16,7 @@ import Orders from "./Pages/Orders";
 import LoadingScreen from "./components/LoadingScreen";
 import { trackVisitor } from "./utils/trackVisitor"
 import { inject } from '@vercel/analytics';
+import FoodDetails from "./Pages/FoodDetails";
 
 inject();
 
@@ -96,6 +97,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="*" element={<>Error</>} />
+        <Route path="/food/:foodId" element={<FoodDetails />} />
       </Routes>
 
       <Footer />

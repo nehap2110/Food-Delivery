@@ -6,6 +6,8 @@ import Footer from "../components/Footer";
 import { assets } from "../assets/assets";
 import toast from 'react-hot-toast'
 
+import ReviewForm from "../components/ReviewForm";
+
 import { io } from "socket.io-client";
 const socket = io("http://localhost:4000");
 
@@ -13,6 +15,16 @@ const Orders = () => {
   const { backendUrl, token } = useContext(AppContext);
   const [orderData, setOrderData] = useState([]);
   const [isTracking, setIsTracking] = useState(false);
+
+  //add review state
+  const [showReview, setShowReview] = useState(false);
+const [selectedFood, setSelectedFood] = useState(null);
+
+const openReviewModal = (item) => {
+ console.log("Selected item:", item);
+  setSelectedFood(item);
+  setShowReview(true);
+};
 
   const getStatusStyle = (status) => {
     switch (status.toLowerCase()) {
@@ -77,7 +89,7 @@ const Orders = () => {
 useEffect(() => {
   socket.on("orderStatusUpdated", (data) => {
     toast.success(`🔔Your order status changed to ${data.status}`);
-    fetchOrders(); // refresh orders
+    fetchOrderData(); // refresh orders
   });
 
   return () => socket.off("orderStatusUpdated");
@@ -185,6 +197,24 @@ const steps = ["Pending", "Preparing", "Out for Delivery", "Delivered"];
   </div>
 </div>
 
+    {/* add review section */}
+
+   {order.status === "Delivered" && (
+  <div className="flex flex-wrap gap-2 mt-3">
+    {order.items
+      .filter(item => item.quantity > 0)   // only ordered items
+      .map((item, i) => (
+        <button
+          key={i}
+          onClick={() => openReviewModal(item)}
+          className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+        >
+          ⭐ Review 
+        </button>
+      ))}
+  </div>
+)}
+
                   {/* <div className="font-Outfit font-semibold text-base text-center md:text-right w-full md:w-auto mt-4 md:mt-0">
                     <span
                       className={`px-4 py-2 rounded-full border ${getStatusStyle(
@@ -200,6 +230,34 @@ const steps = ["Pending", "Preparing", "Out for Delivery", "Delivered"];
           </>
         )}
       </div>
+
+      {/* //open review modal */}
+
+      {showReview && (
+  <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+
+    <div className="bg-white p-6 rounded-xl w-[400px] relative">
+
+      <button
+        className="absolute top-2 right-3 text-xl"
+        onClick={() => setShowReview(false)}
+      >
+        ✖
+      </button>
+
+      <ReviewForm
+         foodId={selectedFood?.foodId}
+         foodName={selectedFood?.name}
+         onSuccess={() => {
+         setShowReview(false);
+         toast.success("Review submitted successfully 🎉");
+  }}
+      />
+
+    </div>
+
+  </div>
+)}
       <Footer />
     </div>
   );
