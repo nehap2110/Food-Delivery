@@ -16,8 +16,8 @@ const ReviewForm = ({ foodId, foodName, onSuccess }) => {
   const submitReview = async (e) => {
 
      e.preventDefault();
-     //console.log("Submitting review...");
-     //console.log("FoodId sent:", foodId);
+     console.log("Submitting review...");
+     console.log("FoodId sent:", foodId);
   const token = localStorage.getItem("token");
   
   try {

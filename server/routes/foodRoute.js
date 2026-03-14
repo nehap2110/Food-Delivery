@@ -1,5 +1,5 @@
 import express from "express";
-import { addFood, deleteFood, getFood } from "../controllers/foodContoller.js";
+import { addFood, deleteFood, getFood,getFoodById } from "../controllers/foodContoller.js";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
@@ -48,5 +48,7 @@ foodRoute.post("/add-food",checkAuth,verifyToken, verifyAdmin, upload.single("im
 });
 foodRoute.get("/get-food", getFood);
 foodRoute.post("/delete",checkAuth,verifyToken,verifyAdmin, deleteFood);
+
+foodRoute.get("/:id", getFoodById);
 
 export default foodRoute;

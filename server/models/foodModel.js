@@ -7,7 +7,7 @@ const foodSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     category: { type: String, required: true },
     note: { type: String, default: "" },
-     avgRating: {
+ avgRating: {
   type: Number,
   default: 0
 },

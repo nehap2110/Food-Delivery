@@ -1,5 +1,6 @@
 import Review from "../models/reviewModel.js";
-import Order from "../models/orderModel.js";
+import orderModel from "../models/orderModel.js";
+import foodModel from "../models/foodModel.js";
 import mongoose from "mongoose";
 
 // Add Review
@@ -7,6 +8,14 @@ export const addReview = async (req, res) => {
   try {
     const userId = req.user;
    const { foodId, rating, comment } = req.body;
+   
+
+   if (!mongoose.Types.ObjectId.isValid(foodId)) {
+  return res.json({
+    success: false,
+    message: "Invalid foodId"
+  });
+}
     
      console.log("Incoming review:", req.body);
 
@@ -21,12 +30,16 @@ export const addReview = async (req, res) => {
       });
     }
 
+    
+
     // Check if user ordered this food
-   const order = await Order.findOne({
+   const order = await orderModel.findOne({
   userId,
   status: "Delivered",
-  "items.foodId": foodId
+ "items.foodId": new mongoose.Types.ObjectId(foodId)
 });
+
+console.log("Order found:", order);
 
     if (!order) {
       return res.json({
@@ -34,6 +47,7 @@ export const addReview = async (req, res) => {
         message: "You can review only after purchasing this item"
       });
     }
+
 
     const review = new Review({
       userId,
@@ -56,9 +70,11 @@ export const addReview = async (req, res) => {
   }
 ]);
 
-await Food.findByIdAndUpdate(foodId, {
-  avgRating: stats[0].avgRating,
-  reviewCount: stats[0].reviewCount
+await foodModel
+
+.findByIdAndUpdate(foodId, {
+  avgRating: stats[0].avgRating ||0,
+  reviewCount: stats[0].reviewCount || 0,
 });
 
     res.json({
@@ -115,10 +131,13 @@ export const getReviews = async (req, res) => {
   try {
 
     const { foodId } = req.params;
+    console.log("FoodId from params:", foodId);
 
-    const reviews = await Review.find({ foodId })
+    const reviews = await Review.find({foodId })
       .populate("userId", "name")
       .sort({ createdAt: -1 });
+
+      console.log("Reviews found:", reviews);
 
     const avg = await Review.aggregate([
       { $match: { foodId: new mongoose.Types.ObjectId(foodId) } },
@@ -135,7 +154,7 @@ export const getReviews = async (req, res) => {
       success: true,
       reviews,
       avgRating: avg[0]?.avgRating || 0,
-      totalReviews: avg[0]?.totalReviews || 0
+      totalReviews: avg[0]?.totalReviews ||0
     });
 
   } catch (error) {

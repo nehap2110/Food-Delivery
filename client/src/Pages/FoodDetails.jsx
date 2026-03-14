@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
 const FoodDetails = () => {
 
@@ -24,14 +25,20 @@ const FoodDetails = () => {
   };
 
   const fetchReviews = async () => {
-
-    const res = await axios.get(`${backendUrl}/api/review/${foodId}`);
+     try {
+       const res = await axios.get(`${backendUrl}/api/review/${foodId}`);
 
     if(res.data.success){
       setReviews(res.data.reviews);
       setAvgRating(res.data.avgRating);
       setTotalReviews(res.data.totalReviews);
     }
+    toast.success("successfully open food page")
+     } catch (error) {
+      toast.error("Error opening food page");
+      console.log(error);
+     }
+   
 
   };
 
