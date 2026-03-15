@@ -20,9 +20,9 @@ const Orders = () => {
   const [showReview, setShowReview] = useState(false);
 const [selectedFood, setSelectedFood] = useState(null);
 
-const openReviewModal = (item) => {
- console.log("Selected item:", item);
-  setSelectedFood(item);
+const openReviewModal = (foodId,name) => {
+ console.log("Selected item:", foodId);
+  setSelectedFood({foodId,name});
   setShowReview(true);
 };
 
@@ -206,7 +206,7 @@ const steps = ["Pending", "Preparing", "Out for Delivery", "Delivered"];
       .map((item, i) => (
         <button
           key={i}
-          onClick={() => openReviewModal(item)}
+          onClick={() => openReviewModal(item.foodId, item.name)}
           className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
         >
           ⭐ Review 

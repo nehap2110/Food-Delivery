@@ -36,7 +36,7 @@ const Checkout = () => {
 
     const simplifiedItems =
       cartItems?.map((item) => ({
-        _id: item._id, //add this food id
+        _id: item.productId, //add this food id
         name: item?.productId?.name || "Unknown Product",
         price: item?.productId?.discount || 0,
         quantity: item?.quantity || 0,

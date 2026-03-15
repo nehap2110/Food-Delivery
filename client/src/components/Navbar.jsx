@@ -5,6 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { AppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
+import Quickbite from '../assets/Quickbite.jpg'
 
 const Navbar = () => {
   const {
@@ -32,16 +33,16 @@ const Navbar = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
-          className="p-4"
+          className="p-3"
         >
           <img
             onClick={() => navigate("/")}
-            className="cursor-pointer  w-20 md:w-28"
-            src={assets.brandLogo}
+            className="cursor-pointer  w-20 md:w-40"
+            src={Quickbite}
             alt=""
           />
         </motion.div>
-        <div className="hidden sm:block">
+        <div className="hidden sm:block ">
           <ul className="flex gap-5 md:gap-10 font-Outfit font-medium text-lg">
             <NavLink to={"/"} className="p-2 text-[#492d13]">
               {" "}

@@ -374,7 +374,7 @@ const Orders = () => {
                 >
                   <option value="Pending">Pending</option>
                   <option value="Preparing">Preparing</option>
-                  <option value="Ready">Ready</option>
+                  <option value="Out for Delivery">Out for Delivery</option>
                   <option value="Delivered">Delivered</option>
                 </select>
               </div>

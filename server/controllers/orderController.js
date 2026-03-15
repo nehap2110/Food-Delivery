@@ -73,7 +73,7 @@ export const verifyPayment = async (req, res) => {
   userId: orderData.userId,
 
   items: orderData.items.map(item => ({
-   foodId: item.foodId || item._id,   // ⭐ store foodId
+   foodId:  item._id,   // ⭐ store foodId
     name: item.name,
     price: item.price,
     quantity: item.quantity

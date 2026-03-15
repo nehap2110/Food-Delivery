@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema(
+   
   {
      foodId: { 
     type: mongoose.Schema.Types.ObjectId,
@@ -36,7 +37,7 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Pending", "Preparing", "Delivered", "Cancelled"],
+    enum: ["Pending", "Preparing", "Out for Delivery", "Delivered"],
     default: "Pending",
   },
   razorpayOrderId: { type: String, required: false },
