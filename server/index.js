@@ -94,6 +94,10 @@ server.listen(4000, () => {
   console.log("Server running");
 });
 
+app.get("/", (req, res) => {
+  res.send("QuickBite API is running");
+});
+
 // app.listen(PORT, () => {
 //   console.log("✅ Server running on PORT:", PORT);
 // });
