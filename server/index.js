@@ -90,12 +90,14 @@ app.use("/api/cart", cartRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/review", reviewRouter);
 
-server.listen(4000, () => {
-  console.log("Server running");
-});
+
 
 app.get("/", (req, res) => {
   res.send("QuickBite API is running");
+});
+
+server.listen(4000, () => {
+  console.log("Server running");
 });
 
 // app.listen(PORT, () => {
