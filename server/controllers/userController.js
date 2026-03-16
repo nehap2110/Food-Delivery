@@ -3,13 +3,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// const createToken = (id) => {
-//   try {
-//     return jwt.sign({ id }, process.env.JWT_SECRET);
-//   } catch (error) {
-//     console.log("error in create token (userconroller) ", error.message);
-//   }
-// };
+
 
 
 const createToken = (id, role) => {

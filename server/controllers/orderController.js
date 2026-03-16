@@ -59,15 +59,7 @@ export const verifyPayment = async (req, res) => {
       .digest("hex");
 
     if (generatedSignature === signature) {
-      // Create and save the order only after successful payment verification
-      // const newOrder = new orderModel({
-      //   userId: orderData.userId,
-      //   items: orderData.items,
-      //   amount: orderData.amount,
-      //   address: orderData.address,
-      //   razorpayOrderId: orderId,
-      //   payment: true
-      // });
+     
 
       const newOrder = new orderModel({
   userId: orderData.userId,

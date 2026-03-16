@@ -4,7 +4,7 @@ dotenv.config();
 
 export const verifyToken = (req, res, next) => {
   //const authHeader = req.headers.authorization || req.headers.token;
- // const authHeader = req.headers.token;
+ 
 
   // if (!authHeader || !authHeader.startsWith("Bearer ")) {
   //   return res
