@@ -47,7 +47,11 @@ const PORT = process.env.PORT || 4000;
 
 connectDb();
 
-app.use(cors({ origin:["http://localhost:5173", "http://localhost:5174"],
+app.use(cors({ origin:["http://localhost:5173",
+   "http://localhost:5174",
+    "https://food-delivery-vert-chi.vercel.app",
+    "https://food-delivery-c2zb.vercel.app"
+  ],
 
    credentials: true
 }));
@@ -96,7 +100,7 @@ app.get("/", (req, res) => {
   res.send("QuickBite API is running");
 });
 
-server.listen(4000, () => {
+server.listen(PORT, () => {
   console.log("Server running");
 });
 
