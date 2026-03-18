@@ -1,158 +1,197 @@
-# 🍔 MERN Food Delivery App
+# 🍔 QuickBite – MERN Food Delivery App
 
-A full-stack Food Delivery Web Application built using the MERN stack (MongoDB, Express.js, React, Node.js) with a powerful Admin Panel for managing food items and orders.
-The frontend was personally designed to offer a smooth and intuitive user experience. This project features admin and user authentication, cart management, order processing, and real-world backend architecture.
+🏠 Home Page
+![Home](screenshots/Home-page.png)
 
-🧠 Built to master full-stack development, implement Redis for performance optimization, and apply clean, component-based UI design.
+🛒Cart Page
+![Cart](screenshots/Cart-page.png)
 
-
-
-## 🔗 Live Demo (Optional)
-
-- 👉 User panel [https://food-delivery-roan-one.vercel.app/](https://food-delivery-client-chi.vercel.app/)
-- 👉 Admin panel [https://food-delivery-roan-one.vercel.app/](https://food-delivery-admin-dusky-kappa.vercel.app/)
+👤Admin Page
+![Admin](screenshots/Admin-Page.png)
 
 
+# 🍔 MERN Food Delivery App A full-stack Food Delivery Web Application built using the MERN stack (MongoDB, Express.js, React, Node.js) with a powerful Admin Panel for managing food items and orders. The frontend was personally designed to offer a smooth and intuitive user experience. This project features admin and user authentication, cart management, order processing, and real-world backend architecture.
 
-## 🔐 Admin Access
-To register a new admin, use the following API endpoint via Postman:
-POST → https://food-delivery-j63v.onrender.com/api/admin/register
-Include the following in the request body:
-name
-email
-password
+This project demonstrates **real-world backend architecture** with:
 
-## ✅ Demo Admin Credentials:
-  - Email: admin@mail.com
-   - Password: 12345678
+* ⚡ Redis caching for performance optimization
+* 📡 Socket.io for real-time communication
+* ⭐ Ratings & Reviews system
+* 💳 Razorpay payment integration
+
+
+
+## 🔗 Live Demo
+
+* 👤 **User Panel:** https://food-delivery-vert-chi.vercel.app/
+* 🛠️ **Admin Panel:** https://food-delivery-c2zb.vercel.app/
+* ⚙️ **Backend API:** https://quickbite-backend-9cnh.onrender.com
+
+
 
 ## 🚀 Features
 
-👤 User Panel
+### 👤 User Panel
 
+* 📦 Browse food items & categories
+* 🛒 Add to cart & checkout
+* 🔐 User authentication (Login/Register)
+* 📋 View orders & order history
+* ⭐ Rate & review food items
 
-- 📦 Browse food items and categories
+### 🛠️ Admin Panel
 
-- 🛒 Add items to cart and checkout
+* 🔐 Admin authentication
+* 📥 Add / Update / Delete food items
+* 📊 Manage orders
+* 👥 Manage users
+* Update order status
+  
 
-- 🔐 User authentication (login/register)
+---
 
-- 📋 View orders and order history
+## 📡 Real-Time Features (Socket.io)
 
-🛠️ Admin Panel
+* 🔄 Real-time order status updates
+* 🔔 Instant notifications
+* 📡 Live communication between client & server
 
-- 🧾 Admin authentication
+---
 
-- 📥 Add, update, delete food items
+## ⚡ Performance Optimization (Redis)
 
-- 📊 View and manage orders
-
-- 👥 Manage user data
-
-Backend Capabilities
-
-- 💾 RESTful API with MongoDB
-
-- ⚡ Redis integration for caching and performance
-
-- 🛡️ JWT-based secure authentication
-
-- 📂 File upload support (e.g., food images)
+* 🚀 Implemented Redis caching using Upstash
+* 📉 Reduced database load for frequently accessed APIs
+* ⚡ Improved response time significantly
+* 🔄 Cache invalidation for data consistency
 
 ---
 
 ## 🧰 Tech Stack
 
-**Frontend:**
-- React
-- React Router
-- Tailwind CSS
-- Axios
+### 🎨 Frontend
 
-**Backend:**
-- Node.js
-- Express.js
-- MongoDB (Mongoose)
-- JWT for auth
+* React
+* React Router
+* Tailwind CSS
+* Axios
 
+### ⚙️ Backend
+
+* Node.js
+* Express.js
+* MongoDB (Mongoose)
+* JWT Authentication
+* Redis (Upstash)
+* Socket.io
 
 ---
 
 ## 🛠️ Getting Started Locally
 
-> 💡 Make sure you have `Node.js`, `npm`, and `MongoDB` installed on your system.
+> 💡 Ensure Node.js, npm, and MongoDB are installed.
 
-### 🔃 Clone the repository
-
-```bash
-git clone https://github.com/divilthakur/mern-food-delivery.git
-cd mern-food-delivery
-```
+### 🔃 Clone the Repository
 
 
+git clone https://github.com/nehap2110/Food-Delivery
+cd food-delivery
 
-## 🖥️ Start the Frontend
-```
-# Navigate to frontend directory
+
+---
+
+## 🖥️ Run the Project
+
+### ▶️ Frontend
+
+
 cd client
-
-# Install dependencies
 npm install
-
-# Start the React development server
 npm run dev
-```
 
-## 🛠️ Start the Backend
-```
-# Navigate to backend directory
+
+### ▶️ Backend
+
+
 cd server
-
-# Install dependencies
 npm install
-
-# Start the Express server
-npm start
-```
-
-## 🖥️ Start the Admin
-```
-# Navigate to frontend directory
-cd admin
-
-# Install dependencies
-npm install
-
-# Start the React development server
 npm run dev
-```
-## ⚙️ Set up Environment Variables
 
-```
 
-# Server
+### ▶️ Admin Panel
+
+cd admin
+npm install
+npm run dev
+
+
+---
+
+## ⚙️ Environment Variables
+
+### 🔧 Backend (.env)
+
+
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-CLOUDINARY_API_KEY=**********
-CLOUDINARY_API_SECRET=*********
+
+CLOUDINARY_API_KEY=******
+CLOUDINARY_API_SECRET=******
 CLOUDINARY_CLOUD_NAME=yourname
+
 UPSTASH_REDIS_REST_URL=https://******.upstash.io
-UPSTASH_REDIS_REST_TOKEN=AmqMAAIg_ajfsfnjefj
+UPSTASH_REDIS_REST_TOKEN=********
 
 
-# Client & Admin
-VITE_RAZORPAY_KEY_ID = key
-VITE_BACKEND_URL = http://localhost:4000 (or your deployed link)
-```
+### 🌐 Frontend & Admin (.env)
 
 
-
-## 🙋‍♂️ Author
-Made with ❤️ by Divil Thakur
-📧 Email: divilthkr3@gmail.com
+VITE_RAZORPAY_KEY_ID=your_key
+VITE_BACKEND_URL=http://localhost:4000
 
 
+---
 
+## 🔐 Admin Access
+
+**POST** `/api/admin/register`
+
+### Request Body:
+
+
+{
+  "name": "Admin Name",
+  "email": "admin@mail.com",
+  "password": "12345678"
+}
+
+
+### ✅ Demo Credentials
+
+* Email: [admin@mail.com](mailto:admin@mail.com)
+* Password: 1234567890
+
+---
+
+## 📈 Future Improvements
+
+* 📍 Real-time order tracking UI
+* 🔔 Push notifications
+* 🎟️ Coupons & discounts
+* 🤖 AI-based recommendations
+
+---
+
+## 🙋‍♀️ Author
+
+Neha Patel
+
+---
+
+## ⭐ Support
+
+If you like this project, don’t forget to **star ⭐ the repository!**
